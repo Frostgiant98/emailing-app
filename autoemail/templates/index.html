@@ -27,6 +27,7 @@
             <div>
                 <label for="mail">Text</label>
                 <input type="text" name="mail" id="" max = 256 required>
+				in
             </div>
             
 			<button type="submit">Submit</button>
@@ -37,8 +38,17 @@
 		{% if studs %}
 			{% for i in studs %}
 
-			{{i}}
+			
+			<fieldset>
+			<center>
 
+				
+				email adress : {{i.emailad}} <hr>
+				subject: {{i.mailsub}} <hr>
+				content: {{i.mailtext}} <br>
+			</center>
+				
+			</fieldset>
 			{% endfor %}
 		{% endif %}
 	</section>

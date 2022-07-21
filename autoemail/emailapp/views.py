@@ -1,9 +1,9 @@
-from audioop import reverse
-from multiprocessing import context
 from django.urls import reverse
 from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from rest_framework import viewsets
 from .models import Mail
+from .serializer import MailSerializers
 
 
 # Create your views here.
@@ -15,10 +15,9 @@ def homepage(request):
         subject = request.POST.get('subject')
         mail = request.POST.get('mail')
         post = Mail( emailad = email , mailsub = subject, mailtext = mail)
-        post.save
-        reverse('homepage')
+        post.save()
 
-    eve = Mail.objects.all()
+    eve = Mail.objects.all().order_by('-mail_id')
     paginator = Paginator(eve, 10)
     page = request.GET.get('page')
     try:
@@ -30,3 +29,7 @@ def homepage(request):
 
     context = {'studs':studs}
     return render(request,'index.html', context)
+
+class MailView(viewsets.ModelViewSet):
+    queryset = Mail.objects.all()
+    serializer_class = MailSerializers
