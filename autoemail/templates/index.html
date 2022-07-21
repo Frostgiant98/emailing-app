@@ -1,0 +1,70 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+	
+	<section>
+		<form action="." method="post">
+			{% csrf_token %}
+			
+        	<!-- put the form  in a modal -->
+            
+			<div>
+                <label for="email">Email Adress</label>
+                <input type="email" name="email" id="" required>
+            </div>
+            
+            <div>
+                <label for="subject">subject</label>
+                <input type="text" name="subject" id="" max = "6" required>
+            </div>
+            
+            <div>
+                <label for="mail">Text</label>
+                <input type="text" name="mail" id="" max = 256 required>
+            </div>
+            
+			<button type="submit">Submit</button>
+		</form>
+	</section>
+
+	<section>
+		{% if studs %}
+			{% for i in studs %}
+
+			{{i}}
+
+			{% endfor %}
+		{% endif %}
+	</section>
+
+	<nav aria-label="Page navigation example text-center">
+		{% if studs.has_other_pages %}
+		  <ul class="pagination">
+			{% if studs.has_previous %}
+			  <li class="page-item"><a class="page-link" href="?page={{ studs.previous_page_number }}">&laquo;</a></li>
+			{% else %}
+			  <li class="disabled page-item"><span class="page-link">&laquo;</span></li>
+			{% endif %}
+			{% for i in studs.paginator.page_range %}
+			  {% if studs.number == i %}
+				<li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+			  {% else %}
+				<li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+			  {% endif %}
+			{% endfor %}
+			{% if studs.has_next %}
+			  <li class="page-item"><a class="page-link" href="?page={{ studs.next_page_number }}">&raquo;</a></li>
+			{% else %}
+			  <li class="page-item disabled"><span>&raquo;</span></li>
+			{% endif %}
+		  </ul>
+		{% endif %}
+		</nav> 
+</body>
+</html>
